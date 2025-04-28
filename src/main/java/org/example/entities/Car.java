@@ -21,10 +21,6 @@ public class Car {
         return make + " " + model + " " + manufactureYear + " " + purchaseYear;
     }
 
-    public String getHashCodeString() {
-        return make + " " + model + " " + manufactureYear;
-    }
-
     private int calculateOwnerShipLength() {
         return purchaseYear - manufactureYear;
     }

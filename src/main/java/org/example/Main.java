@@ -55,12 +55,12 @@ public class Main {
         System.out.println("---------------------------------");
 
         HashMap<String, Car> myCarHashMap = new HashMap<>();
-        myCarHashMap.put(vintageCar1.getHashCodeString(),vintageCar1);
-        myCarHashMap.put(vintageCar2.getHashCodeString(),vintageCar2);
-        myCarHashMap.put(vintageCar2.getHashCodeString(),vintageCar2);
-        myCarHashMap.put(modernCar3.getHashCodeString(),modernCar3);
-        myCarHashMap.put(modernCar5.getHashCodeString(),modernCar5);
-        myCarHashMap.put(modernCar5.getHashCodeString(),modernCar5);
+        myCarHashMap.put(vintageCar1.getCarInfo(),vintageCar1);
+        myCarHashMap.put(vintageCar2.getCarInfo(),vintageCar2);
+        myCarHashMap.put(vintageCar2.getCarInfo(),vintageCar2);
+        myCarHashMap.put(modernCar3.getCarInfo(),modernCar3);
+        myCarHashMap.put(modernCar5.getCarInfo(),modernCar5);
+        myCarHashMap.put(modernCar5.getCarInfo(),modernCar5);
 
         for (HashMap.Entry<String, Car> car : myCarHashMap.entrySet()) {
             System.out.println(car.getKey() + " " + car.getValue());
