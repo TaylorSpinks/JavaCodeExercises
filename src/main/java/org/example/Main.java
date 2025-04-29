@@ -3,10 +3,8 @@ package org.example;
 import org.example.entities.Car;
 import org.example.service.CarService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.awt.image.ImageProducer;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -94,5 +92,30 @@ public class Main {
             arr[j] = tempOfI;
         }
         return arr;
+    }
+
+    public static int findFirstDuplicate(int[] arr) {
+        LinkedHashMap<Integer, Integer> integerHashmap = new LinkedHashMap<>();
+        for(int i=0; i < arr.length; i++){
+
+            integerHashmap.put(arr[i], integerHashmap.getOrDefault(arr[i], 0) + 1);
+            if(integerHashmap.getOrDefault(arr[i], 0) + 1 > 2) {
+                return arr[i];
+            }
+        }
+
+        return -1;
+    }
+
+    public static int findFirstDuplicateV2(int [] arr){
+        HashSet<Integer> integerHashSet = new HashSet<>();
+        for (int j : arr) {
+            if (integerHashSet.contains(j)) {
+                return j;
+            } else {
+                integerHashSet.add(j);
+            }
+        }
+        return -1;
     }
 }

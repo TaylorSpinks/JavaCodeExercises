@@ -63,4 +63,53 @@ public class MainTests {
 
         assertArrayEquals(expectedArr,Main.reverseArr(arr));
     }
+
+    @Test
+    public void testFindFirstDuplicate(){
+        int [] arr = {2, 5, 1, 2, 3, 5, 1};
+        int expectedInteger = 2;
+
+        int actualArr = Main.findFirstDuplicate(arr);
+        int actualArrV2 = Main.findFirstDuplicateV2(arr);
+
+        assertEquals(expectedInteger,actualArr);
+        assertEquals(expectedInteger,actualArrV2);
+    }
+
+    @Test
+    public void testFindFirstDuplicateWhenNoDuplicates(){
+        int [] arr = {1, 2, 3, 4, 5};
+        int expectedInteger = -1;
+
+        int actualArr = Main.findFirstDuplicate(arr);
+        int actualArrV2 = Main.findFirstDuplicateV2(arr);
+
+        assertEquals(expectedInteger,actualArr);
+        assertEquals(expectedInteger,actualArrV2);
+    }
+
+    @Test
+    public void testFindFirstDuplicateWhenEmpty(){
+        int [] arr = {};
+        int expectedInteger = -1;
+
+        int actualArr = Main.findFirstDuplicate(arr);
+        int actualArrV2 = Main.findFirstDuplicateV2(arr);
+
+        assertEquals(expectedInteger,actualArr);
+        assertEquals(expectedInteger,actualArrV2);
+    }
+
+    @Test
+    public void testFindFirstDuplicateWhenInOrderDuplicates(){
+        int [] arr = { 1,1,2,2,3,4,4,5};
+        int expectedInteger = 1;
+
+        int actualArr = Main.findFirstDuplicate(arr);
+        int actualArrV2 = Main.findFirstDuplicateV2(arr);
+
+        assertEquals(expectedInteger,actualArr);
+        assertEquals(expectedInteger,actualArrV2);
+    }
+
 }
