@@ -1,6 +1,10 @@
 package org.example.service;
 
-import java.util.ArrayList;
+import org.example.entities.InventoryItem;
+import org.example.model.TaskModel;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadService {
@@ -32,6 +36,19 @@ public class ThreadService {
         thread1.join();
 
         return safeCounter.getCount();
+    }
+
+    public ConcurrentHashMap<InventoryItem, Integer> runTasks(ArrayList<TaskModel> tasksToRun) throws InterruptedException {
+        ConcurrentHashMap<InventoryItem, Integer> inventoryItems = new ConcurrentHashMap<>();
+        InventoryService inventoryService = new InventoryService(inventoryItems);
+        for(TaskModel task : tasksToRun){
+            InventoryTask inventoryTask = new InventoryTask(inventoryService, task.getOperationType(), task.getInventoryItems(), 5);
+            Thread thread = new Thread(inventoryTask);
+            thread.start();
+            thread.join();
+        }
+
+        return inventoryItems;
     }
 
 

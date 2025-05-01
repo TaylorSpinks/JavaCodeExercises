@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entities.InventoryItem;
+import org.example.service.enums.InventoryOperationType;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -54,9 +55,6 @@ public class InventoryService {
 
 }
 
-enum InventoryOperationType {
-    ADD, REMOVE, UPDATE
-}
 
 class InventoryTask implements Runnable {
     private final InventoryService inventoryService;
@@ -70,7 +68,6 @@ class InventoryTask implements Runnable {
         this.inventoryItem = inventoryItem;
         this.quantity = quantity;
     }
-
 
     public void run(){
         switch (type){
