@@ -33,7 +33,8 @@ public class InventoryService {
     }
 
     public Integer updateInventoryItemQuantity(InventoryItem inventoryItem, int newValue) {
-        return this.inventory.computeIfPresent(inventoryItem, (item, k) -> new AtomicInteger(newValue)).getAndAdd(newValue);
+        AtomicInteger current = this.inventory.computeIfAbsent(inventoryItem, k -> new AtomicInteger(0));
+        return current.getAndAdd(newValue);
     }
 
     public AtomicInteger getQuantityByInventoryItem(InventoryItem inventoryItem) {

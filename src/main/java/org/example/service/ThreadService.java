@@ -41,10 +41,17 @@ public class ThreadService {
     public ConcurrentHashMap<InventoryItem, AtomicInteger> runTasks(ArrayList<TaskModel> tasksToRun) throws InterruptedException {
         ConcurrentHashMap<InventoryItem, AtomicInteger> inventoryItems = new ConcurrentHashMap<>();
         InventoryService inventoryService = new InventoryService(inventoryItems);
+        ArrayList<Thread> listOfThreads = new ArrayList<>();
         for(TaskModel task : tasksToRun){
             InventoryTask inventoryTask = new InventoryTask(inventoryService, task.getOperationType(), task.getInventoryItems(), task.getQuantity());
-            Thread thread = new Thread(inventoryTask);
+            listOfThreads.add(new Thread(inventoryTask));
+        }
+
+        for (Thread thread : listOfThreads){
             thread.start();
+        }
+
+        for (Thread thread : listOfThreads){
             thread.join();
         }
 
