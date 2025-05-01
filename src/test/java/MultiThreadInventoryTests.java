@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MultiThreadInventoryTests {
     @Test
     void test20Threads() throws InterruptedException {
         ArrayList<TaskModel> ListOfTasks = CreateTasksHelper.generateManyTasks(20);
-        ConcurrentHashMap<InventoryItem, Integer> inventoryItems = new ConcurrentHashMap<>();
 
         ThreadService threadService = new ThreadService();
 
-        inventoryItems = threadService.runTasks(ListOfTasks);
+        ConcurrentHashMap<InventoryItem, AtomicInteger> inventoryItems = threadService.runTasks(ListOfTasks);
 
-        for (Map.Entry<InventoryItem, Integer> item : inventoryItems.entrySet()){
+        for (Map.Entry<InventoryItem, AtomicInteger> item : inventoryItems.entrySet()){
             System.out.println(item.getKey() + " " + item.getValue());
         }
     }

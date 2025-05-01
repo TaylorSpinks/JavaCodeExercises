@@ -29,7 +29,7 @@ public class CreateTasksHelper {
             String itemName = ITEM_NAMES.get(random.nextInt(ITEM_NAMES.size()));
             String itemType = ITEM_TYPES.get(random.nextInt(ITEM_TYPES.size()));
             InventoryItem item = new InventoryItem(itemName, itemType);
-            int quantity = random.nextInt();
+            int quantity = random.nextInt(100);
 
             InventoryOperationType operation = OPERATIONS[random.nextInt(OPERATIONS.length)];
 

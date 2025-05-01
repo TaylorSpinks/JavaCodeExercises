@@ -3,6 +3,7 @@ import org.example.service.InventoryService;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,7 +12,7 @@ public class InventoryTests {
     @Test
     public void TestAddAndSearchNewItem(){
         InventoryItem inventoryItem = new InventoryItem("pringles", "chips");
-        ConcurrentHashMap <InventoryItem, Integer> newInventory = new ConcurrentHashMap<>();
+        ConcurrentHashMap <InventoryItem, AtomicInteger> newInventory = new ConcurrentHashMap<>();
         InventoryService inventoryService = new InventoryService(newInventory);
 
         int quantity = 3;
@@ -29,7 +30,7 @@ public class InventoryTests {
     @Test
     public void TestRemoveEntireItemWhenNoQuantityLeft(){
         InventoryItem inventoryItem = new InventoryItem("pringles", "chips");
-        ConcurrentHashMap <InventoryItem, Integer> newInventory = new ConcurrentHashMap<>();
+        ConcurrentHashMap <InventoryItem, AtomicInteger> newInventory = new ConcurrentHashMap<>();
         InventoryService inventoryService = new InventoryService(newInventory);
 
         int quantity = 3;

@@ -38,11 +38,11 @@ public class ThreadService {
         return safeCounter.getCount();
     }
 
-    public ConcurrentHashMap<InventoryItem, Integer> runTasks(ArrayList<TaskModel> tasksToRun) throws InterruptedException {
-        ConcurrentHashMap<InventoryItem, Integer> inventoryItems = new ConcurrentHashMap<>();
+    public ConcurrentHashMap<InventoryItem, AtomicInteger> runTasks(ArrayList<TaskModel> tasksToRun) throws InterruptedException {
+        ConcurrentHashMap<InventoryItem, AtomicInteger> inventoryItems = new ConcurrentHashMap<>();
         InventoryService inventoryService = new InventoryService(inventoryItems);
         for(TaskModel task : tasksToRun){
-            InventoryTask inventoryTask = new InventoryTask(inventoryService, task.getOperationType(), task.getInventoryItems(), 5);
+            InventoryTask inventoryTask = new InventoryTask(inventoryService, task.getOperationType(), task.getInventoryItems(), task.getQuantity());
             Thread thread = new Thread(inventoryTask);
             thread.start();
             thread.join();

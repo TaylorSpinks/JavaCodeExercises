@@ -4,42 +4,40 @@ import org.example.entities.InventoryItem;
 import org.example.service.enums.InventoryOperationType;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntUnaryOperator;
 
 public class InventoryService {
 
-    private final ConcurrentHashMap<InventoryItem, Integer> inventory;
+    private final ConcurrentHashMap<InventoryItem, AtomicInteger> inventory;
 
-    public InventoryService(ConcurrentHashMap<InventoryItem, Integer> inventory) {
+    public InventoryService(ConcurrentHashMap<InventoryItem, AtomicInteger> inventory) {
         this.inventory = inventory;
     }
 
     public void addStock(InventoryItem inventoryItem, int quantity) {
-        this.inventory.put(inventoryItem, quantity);
+        inventory.computeIfAbsent(inventoryItem, k -> new AtomicInteger(0)).addAndGet(quantity);
     }
 
     public Integer removeStock(InventoryItem inventoryItem, int quantity) {
+        int currQuantity = getQuantityByInventoryItem(inventoryItem).get();
 
-        int currQuantity = getQuantityByInventoryItem(inventoryItem);
-
-        if (currQuantity - quantity == 0) {
+        if (currQuantity-quantity == 0) {
             this.inventory.remove(inventoryItem);
             return 0;
-        } else if (currQuantity - quantity > 0) {
-            return updateInventoryItemQuantity(inventoryItem, currQuantity - quantity);
+        } else if (currQuantity-quantity > 0) {
+            return updateInventoryItemQuantity(inventoryItem, currQuantity);
         }
 
         return null;
     }
 
     public Integer updateInventoryItemQuantity(InventoryItem inventoryItem, int newValue) {
-        if (this.inventory.containsKey(inventoryItem)) {
-            return this.inventory.put(inventoryItem, newValue);
-        }
-        return null;
+        return this.inventory.computeIfPresent(inventoryItem, (item, k) -> new AtomicInteger(newValue)).getAndAdd(newValue);
     }
 
-    public int getQuantityByInventoryItem(InventoryItem inventoryItem) {
-        return this.inventory.get(inventoryItem);
+    public AtomicInteger getQuantityByInventoryItem(InventoryItem inventoryItem) {
+        return this.inventory.getOrDefault(inventoryItem,new AtomicInteger(0));
     }
 
     public String searchInventory(InventoryItem inventoryItem) {
@@ -49,7 +47,7 @@ public class InventoryService {
         return "not found";
     }
 
-    public ConcurrentHashMap<InventoryItem, Integer> getWholeInventory() {
+    public ConcurrentHashMap<InventoryItem, AtomicInteger> getWholeInventory() {
         return this.inventory;
     }
 
